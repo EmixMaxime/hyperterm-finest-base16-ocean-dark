@@ -58,19 +58,23 @@ Object.assign({}, config, {
       /* Set tab colors */
       .tab_tab {
         background-color: ${DARKER_BLACK} !important;
-        border: none !important;
-        border-right: 1px solid transparent !important;
-        border-left: 1px solid transparent !important;
+        border-width: 0px !important;
+        border-left-width: 1px !important;
+        border-right-width: 1px !important;
+        border-style: solid !important;
+        border-image: linear-gradient(to bottom, rgba(77, 84, 99, 0) 0%, rgba(77, 84, 99, 1) 100%) 1 !important;
       }
       .tab_tab:not(.tab_active) {
         color: ${FOREGROUND_COLOR} !important;
+      }
+      .tab_tab:not(.tab_active):first-child {
+        border-left-width: 0px !important;
       }
       /* Hide bottom border if tab is active, make bg lighter */
       .tab_tab.tab_active {
         background-color: ${BACKGROUND_COLOR} !important;
         height: calc(100% + 1px);
         border-left: 1px solid ${BORDER_COLOR} !important;
-        border-right: 1px solid ${BORDER_COLOR} !important;
         color: #fff !important;
       }
       .tab_tab:last-child {
