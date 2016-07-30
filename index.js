@@ -75,6 +75,7 @@ Object.assign({}, config, {
         background-color: ${BACKGROUND_COLOR} !important;
         height: calc(100% + 1px);
         border-left: 1px solid ${BORDER_COLOR} !important;
+        border-right: 0px !important;
         color: #fff !important;
       }
       .tab_tab:last-child {
