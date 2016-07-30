@@ -60,7 +60,6 @@ Object.assign({}, config, {
         background-color: ${DARKER_BLACK} !important;
         border-width: 0px !important;
         border-left-width: 1px !important;
-        border-right-width: 1px !important;
         border-style: solid !important;
         border-image: linear-gradient(to bottom, rgba(77, 84, 99, 0) 0%, rgba(77, 84, 99, 1) 100%) 1 !important;
       }
@@ -75,7 +74,6 @@ Object.assign({}, config, {
         background-color: ${BACKGROUND_COLOR} !important;
         height: calc(100% + 1px);
         border-left: 1px solid ${BORDER_COLOR} !important;
-        border-right: 0px !important;
         color: #fff !important;
       }
       .tab_tab:last-child {
