@@ -57,18 +57,21 @@ Object.assign({}, config, {
       }
       /* Set tab colors */
       .tab_tab {
-        color: ${FOREGROUND_COLOR} !important;
         background-color: ${DARKER_BLACK} !important;
         border: none !important;
         border-right: 1px solid transparent !important;
         border-left: 1px solid transparent !important;
       }
+      .tab_tab:not(.tab_active) {
+        color: ${FOREGROUND_COLOR} !important;
+      }
       /* Hide bottom border if tab is active, make bg lighter */
-      .tab_active {
+      .tab_tab.tab_active {
         background-color: ${BACKGROUND_COLOR} !important;
         height: calc(100% + 1px);
         border-left: 1px solid ${BORDER_COLOR} !important;
         border-right: 1px solid ${BORDER_COLOR} !important;
+        color: #fff !important;
       }
       .tab_tab:last-child {
         border-right: 1px solid transparent !important;
