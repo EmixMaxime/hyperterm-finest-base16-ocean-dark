@@ -1,6 +1,6 @@
 // Colors
-const DARKER_BLACK = '#363b48';
-const BLACK = '#393f4c'
+const DARKER_BLACK = '54, 59, 72'
+const BLACK = '57, 63, 76'
 const LIGHT_BLACK = '#646f85'
 const RED = '#cc777d'
 const LIGHT_RED = '#da9a83'
@@ -21,7 +21,7 @@ const LIGHT_WHITE = '#dbe1e8'
 const BACKGROUND_COLOR = BLACK
 const FOREGROUND_COLOR = WHITE
 const INACTIVE_TAB_BACKGROUND = DARKER_BLACK
-const BORDER_COLOR = '#4d5463'
+const BORDER_COLOR = '77, 84, 99'
 const COLORS = {
   black: BLACK,
   red: RED,
@@ -42,39 +42,51 @@ const COLORS = {
 }
 
 // Apply theme
-exports.decorateConfig = (config) => (
-Object.assign({}, config, {
-  BACKGROUND_COLOR,
-  FOREGROUND_COLOR,
-  borderColor: BORDER_COLOR,
-  cursorColor: FOREGROUND_COLOR,
-  COLORS,
-  css: `
+exports.decorateConfig = (config) => {
+  const themeConfig = Object.assign({ opacity: 1 }, config.finestOceanDark)
+  const opacity = themeConfig.opacity
+  const isTransparent = opacity < 1
+  const borderShimDisplay = isTransparent ? 'none' : 'block'
+  const leftBorderWidth = isTransparent ? '0px' : '1px'
+  const inactiveTabOpacity = isTransparent ? '0.35' : '1'
+
+  return Object.assign({}, config, {
+    backgroundColor: `rgba(${BACKGROUND_COLOR}, ${opacity})`,
+    foregroundColor: FOREGROUND_COLOR,
+    borderColor: `rgba(${BORDER_COLOR}, ${opacity})`,
+    cursorColor: FOREGROUND_COLOR,
+    colors: COLORS,
+    css: `
       ${config.css || ''}
-      /* Highlight active tab by making rest of nav darker */
-      .tabs_list {
-        background-color: ${DARKER_BLACK} !important;
-      }
       /* Set tab colors */
       .tab_tab {
-        background-color: ${DARKER_BLACK} !important;
-        border-width: 0px !important;
+        border-top-width: 0px !important;
+        border-right-width: 0px !important;
         border-left-width: 1px !important;
+        border-bottom-width: 1px;
+        border-bottom-color: rgba(${BORDER_COLOR}, ${opacity});
         border-style: solid !important;
         border-image: linear-gradient(to bottom, rgba(77, 84, 99, 0) 0%, rgba(77, 84, 99, 1) 100%) 1 !important;
       }
       .tab_tab:not(.tab_active) {
         color: ${FOREGROUND_COLOR} !important;
+        background-color: rgba(${INACTIVE_TAB_BACKGROUND}, ${inactiveTabOpacity}) !important;
       }
-      .tab_tab:not(.tab_active):first-child {
-        border-left-width: 0px !important;
+      .tab_tab:not(.tab_active).tab_first {
+        border-left-width: ${leftBorderWidth} !important;
       }
       /* Hide bottom border if tab is active, make bg lighter */
       .tab_tab.tab_active {
-        background-color: ${BACKGROUND_COLOR} !important;
-        height: calc(100% + 1px);
-        border-left: 1px solid ${BORDER_COLOR} !important;
+        border-left: 1px solid rgba(${BORDER_COLOR}, ${opacity}) !important;
         color: #fff !important;
+        border-bottom-width: 0px !important;
+      }
+      /* Hide bottom border if tab is active, make bg lighter */
+      .tab_tab.tab_active.tab_first {
+        border-left-width: ${leftBorderWidth} !important;
+      }
+      .tabs_borderShim {
+        display: ${borderShimDisplay} !important;
       }
       .tab_tab:last-child {
         border-right: 1px solid transparent !important;
@@ -88,18 +100,4 @@ Object.assign({}, config, {
       }
     `
   })
-)
-
-// Development middleware for HMR
-exports.middleware = () => (next) => (action) => {
-  /* eslint-disable no-param-reassign, default-case */
-  switch (action.type) {
-    case 'CONFIG_LOAD':
-    case 'CONFIG_RELOAD':
-      action.config.foregroundColor = FOREGROUND_COLOR
-      action.config.backgroundColor = BACKGROUND_COLOR
-      action.config.cursorColor = FOREGROUND_COLOR
-      action.config.colors = COLORS
-  }
-  next(action)
 }

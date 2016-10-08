@@ -14,7 +14,27 @@ Inspired by the Spacegray dark theme by @mxstbr. The name is a joke -- I actuall
         'hyperterm-finest-base16-ocean-dark',
       ],
       ```
-  3. Fully reload Hyperterm (Cmd+Shift+R) 
+  3. Fully reload Hyperterm (Cmd+Shift+R)
+
+## Configure
+
+### Opacity
+
+Since version `0.5.0`, this plugin supports lower opacity backgrounds.
+
+To use the background with a given opacity, edit `~/.hyper.js` and modify the `config` like so:
+
+```js
+module.exports = {
+  config: {
+    // ...
+    finestOceanDark: {
+      opacity: 0.9
+    },
+    // ...
+  }
+}
+```
 
 ## License
 
